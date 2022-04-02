@@ -1,0 +1,70 @@
+spring:
+  http:
+    multipart:
+      location: /data/upload_tmp
+
+  # 数据源
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://118.195.192.14:3306/test?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: yy
+    password: 123456
+    hikari:
+      # 线程池名字
+      pool-name: DateHikariCP
+      # 最小空闲连接池
+      minimum-idle: 5
+      # 空闲连接存活最大时间 默认10分钟
+      idle-timeout: 180000
+      # 最大连接数 默认10
+      maximum-pool-size: 10
+      # 从连接池返回的连接自动提交
+      auto-commit: true
+      # 连接最大存活时间 0表示永久存活 默认30分钟
+      max-lifetime: 1800000
+      # 连接超时时间 默认30000
+      connection-timeout: 30000
+      # 测试连接是否可用的查询语句
+      connection-test-query: SELECT 1
+mybatis:
+  # 扫描映射文件
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    # 开启驼峰映射配置
+    map-underscore-to-camel-case: true
+
+# 打印SQL
+logging:
+  level:
+    root: info
+    com.qf.movie.mapper: debug
+server:
+  port: 8080
+  session:
+    timeout: 7200
+config:
+  jwt:
+    #加密密钥
+    secret: sadsadasdsadsadasdasxcxvfsaczccxsa
+    # token有效时长 单位秒
+    expire: 1800
+  sms:
+    accessKeyId: LTAI5tQYDzLgUkK5Qtdhsk1W
+    accessSecret: iJWTXrJz3BDcTmmQV4o5HtZqniZnKh
+    signName: 扩新
+    regionId: cn-hangzhou
+  oss:
+    endpoint: oss-cn-shenzhen.aliyuncs.com
+    keyid: LTAI5tRzDCJmRWTmsHcBxL8S
+    keysecret: sw67d0d4wE9CRucPIT0oPxTprCjm0b
+    #bucket可以在控制台创建，也可以使用java代码创建
+    bucketname: 2013145231
+
+
+#分页
+pagehelper:
+  autoRuntimeDialect: true
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+

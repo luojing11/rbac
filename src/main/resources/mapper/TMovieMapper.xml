@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.rbac.mapper.TMovieMapper" >
+  <resultMap id="BaseResultMap" type="com.qf.rbac.entity.TMovie" >
+    <id column="movie_id" property="movieId" jdbcType="BIGINT" />
+    <result column="movie_name" property="movieName" jdbcType="VARCHAR" />
+    <result column="movie_picture" property="moviePicture" jdbcType="VARCHAR" />
+    <result column="movie_info" property="movieInfo" jdbcType="VARCHAR" />
+    <result column="movie_start" property="movieStart" jdbcType="TIMESTAMP" />
+    <result column="movie_stop" property="movieStop" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    movie_id, movie_name, movie_picture, movie_info, movie_start, movie_stop
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qf.rbac.entity.TMovieExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_movie
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_movie
+    where movie_id = #{movieId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_movie
+    where movie_id = #{movieId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qf.rbac.entity.TMovieExample" >
+    delete from t_movie
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qf.rbac.entity.TMovie" >
+    insert into t_movie (movie_id, movie_name, movie_picture, 
+      movie_info, movie_start, movie_stop
+      )
+    values (#{movieId,jdbcType=BIGINT}, #{movieName,jdbcType=VARCHAR}, #{moviePicture,jdbcType=VARCHAR}, 
+      #{movieInfo,jdbcType=VARCHAR}, #{movieStart,jdbcType=TIMESTAMP}, #{movieStop,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.rbac.entity.TMovie" >
+    insert into t_movie
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="movieId != null" >
+        movie_id,
+      </if>
+      <if test="movieName != null" >
+        movie_name,
+      </if>
+      <if test="moviePicture != null" >
+        movie_picture,
+      </if>
+      <if test="movieInfo != null" >
+        movie_info,
+      </if>
+      <if test="movieStart != null" >
+        movie_start,
+      </if>
+      <if test="movieStop != null" >
+        movie_stop,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="movieId != null" >
+        #{movieId,jdbcType=BIGINT},
+      </if>
+      <if test="movieName != null" >
+        #{movieName,jdbcType=VARCHAR},
+      </if>
+      <if test="moviePicture != null" >
+        #{moviePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="movieInfo != null" >
+        #{movieInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="movieStart != null" >
+        #{movieStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="movieStop != null" >
+        #{movieStop,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qf.rbac.entity.TMovieExample" resultType="java.lang.Integer" >
+    select count(*) from t_movie
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_movie
+    <set >
+      <if test="record.movieId != null" >
+        movie_id = #{record.movieId,jdbcType=BIGINT},
+      </if>
+      <if test="record.movieName != null" >
+        movie_name = #{record.movieName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.moviePicture != null" >
+        movie_picture = #{record.moviePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.movieInfo != null" >
+        movie_info = #{record.movieInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.movieStart != null" >
+        movie_start = #{record.movieStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.movieStop != null" >
+        movie_stop = #{record.movieStop,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_movie
+    set movie_id = #{record.movieId,jdbcType=BIGINT},
+      movie_name = #{record.movieName,jdbcType=VARCHAR},
+      movie_picture = #{record.moviePicture,jdbcType=VARCHAR},
+      movie_info = #{record.movieInfo,jdbcType=VARCHAR},
+      movie_start = #{record.movieStart,jdbcType=TIMESTAMP},
+      movie_stop = #{record.movieStop,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.rbac.entity.TMovie" >
+    update t_movie
+    <set >
+      <if test="movieName != null" >
+        movie_name = #{movieName,jdbcType=VARCHAR},
+      </if>
+      <if test="moviePicture != null" >
+        movie_picture = #{moviePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="movieInfo != null" >
+        movie_info = #{movieInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="movieStart != null" >
+        movie_start = #{movieStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="movieStop != null" >
+        movie_stop = #{movieStop,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where movie_id = #{movieId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.rbac.entity.TMovie" >
+    update t_movie
+    set movie_name = #{movieName,jdbcType=VARCHAR},
+      movie_picture = #{moviePicture,jdbcType=VARCHAR},
+      movie_info = #{movieInfo,jdbcType=VARCHAR},
+      movie_start = #{movieStart,jdbcType=TIMESTAMP},
+      movie_stop = #{movieStop,jdbcType=TIMESTAMP}
+    where movie_id = #{movieId,jdbcType=BIGINT}
+  </update>
+</mapper>

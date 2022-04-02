@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: dev
+  http:
+    multipart:
+      location: /data/upload_tmp
